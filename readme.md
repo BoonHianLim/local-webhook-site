@@ -1,34 +1,27 @@
-# [Webhook.site](https://webhook.site)
+# Local Webhook.site
 
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/fredsted/webhook.site.svg)](https://hub.docker.com/r/fredsted/webhook.site)
-[![GitHub last commit](https://img.shields.io/github/last-commit/fredsted/webhook.site.svg)](https://github.com/fredsted/webhook.site/commits/master)
+## Introduction
 
-With [Webhook.site](https://webhook.site), you instantly get a unique, random URL that you can use to test and debug Webhooks and HTTP requests, as well as to create your own workflows using the Custom Actions graphical editor or WebhookScript, a simple scripting language, to transform, validate and process HTTP requests.
+Love [Webhook.site](https://webhook.site), but is always frustrated by the 100 request limitation? Fret not! Now, you can easily setup the service on your local machine, with no limitation on the requests - with the help of ngrok.
 
-## What are people using it for?
+## Prerequisite
+1. First, you'll need a ngrok account. Claim your free ngrok account in the official website [here](https://ngrok.com/).
+2. After creating your account, claim your free ngrok domain from Cloud Edge > Domains. If you need a guide, you may follow this official [blog](https://ngrok.com/blog-post/free-static-domains-ngrok-users).
 
-* Receive Webhooks without needing an internet-facing Web server
-* Send Webhooks to a server that’s behind a firewall or private subnet
-* Transforming Webhooks into other formats, and re-sending them to different systems
-* Connect different APIs that aren’t compatible
-* Building contact forms that send emails
-* Instantly build APIs without needing infrastructure
-Built by Simon Fredsted (@fredsted).
+## Install
+1. Clone this project to your local directory.
+2. Duplicate the .env.docker file in this repository, and rename it as .env
+3. Fill in the ngrok auth token and domain. 
+4. Run `docker-compose up -d`
+5. Go to your static ngrok url (for example, `xxx-xxx-xxx.ngrok-free.app`). 
+6. You should now see the webhook.site service running on your local machine. Enjoy!
 
-## Open Source
-
-There are two versions of Webhook.site:
-
-* The completely open-source, MIT-licensed version is available on Github, which can be self-hosted using e.g. Docker, is great for testing Webhooks, but doesn’t include features like Custom Actions.
-
-* The cloud version at [https://webhook.site](https://webhook.site) which has more features, some of them requiring a paid subscription.
+## QnA
+1. You might need to start Cloudflare WARP service on your local machine if you encounter the following error message in ngrok service:
+`failed to fetch CRL. errors encountered: Get "http://crl.ngrok.com/ngrok.crl"`
+- It could be dns provider blocking, refer to [this Stackoverflow answer](https://stackoverflow.com/a/76405870)
+- Regarless, by starting Cloudflare WARP, you should be able to start ngrok service afterwards.
 
 ## Acknowledgements
 
-* The app was built with [Laravel](https://laravel.com) for the API and Angular.js for the frontend SPA.
-* WebhookScript based on [Primi](https://github.com/smuuf/Primi) Copyright (c) Přemysl Karbula.
-* The WebhookScript editor is using the [Ace](https://ace.c9.io/).
-* JSONPath extraction provided by [FlowCommunications](https://github.com/FlowCommunications/JSONPath).
-* This documentation site uses [Just the Docs](https://github.com/pmarsceill/just-the-docs), a documentation theme for Jekyll.
-
-**[Full Documentation at docs.webhook.site](https://docs.webhook.site)**
+* The app was built on top of the completely open-source, MIT-licensed version of webhook.site. You should check it out [here](https://github.com/webhooksite/webhook.site)!
