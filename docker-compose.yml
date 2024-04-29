@@ -6,6 +6,9 @@ services:
     # build:
     #   dockerfile: Dockerfile
     #   context: ./
+    container_name: webhook
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     command: php artisan queue:work --daemon --tries=3 --timeout=10
     ports:
       - "8084:80"
@@ -39,3 +42,12 @@ services:
       - ECHO_ALLOW_ORIGIN=*
       - ECHO_ALLOW_METHODS=*
       - ECHO_ALLOW_HEADERS=*
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    environment:
+      NGROK_AUTHTOKEN: '${NGROK_AUTHTOKEN}'
+    command: 'http --domain=${NGROK_DOMAIN} webhook:80'
+    ports:
+      - 2002:4040
