@@ -10,8 +10,8 @@ Love [Webhook.site](https://webhook.site), but is always frustrated by the 100 r
 
 ## Install
 1. Clone this project to your local directory.
-2. Duplicate the .env.docker file in this repository, and rename it as .env
-3. Fill in the ngrok auth token and domain. 
+2. Duplicate the `.env.docker` file in this repository, and rename it as `.env`
+3. Fill in the secrets in the `.env` file (NGROK_AUTHTOKEN & NGROK_DOMAIN)
 4. Run `docker-compose up -d`
 5. Go to your static ngrok url (for example, `xxx-xxx-xxx.ngrok-free.app`). 
 6. You should now see the webhook.site service running on your local machine. Enjoy!
