@@ -1,17 +1,17 @@
 version: '3'
 services:
   webhook:
-    image: "webhooksite/webhook.site"
+    # image: "webhooksite/webhook.site"
     # Enable build for development:
-    # build:
-    #   dockerfile: Dockerfile
-    #   context: ./
+    build:
+      dockerfile: Dockerfile
+      context: ./
     container_name: webhook
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
     command: php artisan queue:work --daemon --tries=3 --timeout=10
     ports:
       - "8084:80"
+    expose:
+      - "80"
     environment:
       - APP_ENV=dev
       - APP_DEBUG=true
@@ -46,11 +46,28 @@ services:
       - ./data:/usr/test
       - ./data/laravel_handler.sh:/usr/test/laravel_handler.sh
     command: "/usr/test/laravel_handler.sh"
+
   ngrok:
     image: ngrok/ngrok:latest
-    restart: unless-stopped
+    network_mode: 'service:warp'
     environment:
       NGROK_AUTHTOKEN: '${NGROK_AUTHTOKEN}'
-    command: 'http --domain=${NGROK_DOMAIN} webhook:80'
-    ports:
-      - 2002:4040
+    command: 'http host.docker.internal:8084 --domain=${NGROK_DOMAIN}'
+    depends_on:
+      - warp
+
+  warp:
+    image: caomingjun/warp
+    container_name: warp
+    restart: always
+    environment:
+      - WARP_SLEEP=2
+      # - WARP_LICENSE_KEY= # optional
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv4.conf.all.src_valid_mark=1
+    volumes:
+      - ./warp-docker/data:/var/lib/cloudflare-warp
+      
