@@ -17,10 +17,11 @@ Love [Webhook.site](https://webhook.site), but is always frustrated by the 100 r
 6. You should now see the webhook.site service running on your local machine. Enjoy!
 
 ## QnA
-1. You might need to start Cloudflare WARP service on your local machine if you encounter the following error message in ngrok service:
+1. You might encounter the following error message in ngrok service:
 `failed to fetch CRL. errors encountered: Get "http://crl.ngrok.com/ngrok.crl"`
 - It could be dns provider blocking, refer to [this Stackoverflow answer](https://stackoverflow.com/a/76405870)
-- Regarless, by starting Cloudflare WARP, you should be able to start ngrok service afterwards.
+- You could start VPN service on your local machine (e.g. Cloudflare WARP), then you should be able to start ngrok service afterwards.
+- Or, you could switch to branch `warp-support`, where we utilise [warp-docker](https://github.com/cmj2002/warp-docker) to resolve this issue. Note that the license for that version of code will be under `GPL-3.0 license` instead of `MIT`.
 
 ## Acknowledgements
 
