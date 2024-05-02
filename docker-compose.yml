@@ -42,7 +42,6 @@ services:
       - ECHO_ALLOW_METHODS=*
       - ECHO_ALLOW_HEADERS=*
     volumes:
-      - ./data:/usr/test
       - ./data/laravel_handler.sh:/usr/test/laravel_handler.sh
     command: "/usr/test/laravel_handler.sh"
 
